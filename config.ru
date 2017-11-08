@@ -6,4 +6,6 @@ end
 
 require_relative 'app/controllers/application_controller.rb'
 use Rack::MethodOverride
+use StudentsController
+use TeachersController
 run ApplicationController
