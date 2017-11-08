@@ -1,2 +1,25 @@
+<% if Helpers.is_logged_in?(session) %>
+  <H1>Hello <%=@student.name %></H1>
+  <br />
+  <%if !@student.subjects.empty? %>
+    <h3>Your current subjects are:</h3><br />
+    <%@student.subjects.each do |s| %>
+      <%= s.name %>
+      <br />
+    <%end %>
+  <%else %>
+    <p>You currently have no subjects registered.</p>
+  <%end %>
 
-Student's Page
+  <%if !@student.instruments.empty? %>
+    <h3>Your current instruments are:</h3><br />
+    <%@student.instruments.each do |s| %>
+      <%= s.name %>
+      <br />
+    <%end %>
+  <%else %>
+      <p>You currently have no instruments.</p>
+  <%end %>
+
+  <a href="/students/<%=@student.id%>/edit">Make changes</a>
+<%end %>
