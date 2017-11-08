@@ -9,7 +9,7 @@ class StudentsController <  ApplicationController
   end
 
   post '/students/new' do
-
+    binding.pry
     redirect '/students/show'
   end
 
