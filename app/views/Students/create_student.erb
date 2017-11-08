@@ -2,22 +2,8 @@
 <h3>Register below:</h3>
 <br />
 <form method=POST action='/students/new'>
-  Name: <input type='text' id='student[name]' name='student[name]' /><br /><br />
-  Grade:<input type='integer' id='student[grade]' name='student[grade]' /><br /><br />
-  Password:<input type='string' id='student[password]' name='student[password]' /><br /><br />
-
-  <%if !Subject.all.empty? %>
-      Subjects: <%Subject.all.each do |subject| %>
-              <input id="<%= subject.name %>" type="checkbox" name="subjects[]" value="<%= subject.name %>"><%=subject.name%> </input>
-              <%end %>
-              <br /><br />
-  <%end %>
-
-  <%if !Instrument.all.empty? %>
-      Instruments: <%Instrument.all.each do |instrument| %>
-              <input id="<%= instrument.name %>" type="checkbox" name="instruments[]" value="<%= instrument.name %>"><%=instrument.name%> </input>
-              <%end %>
-              <br /><br />
-  <%end %>
+  Name: <input type='text' id='student[name]' name='student[name]' required/><br /><br />
+  Grade:<input type='integer' id='student[grade]' name='student[grade]' required /><br /><br />
+  Password:<input type='password' id='student[password]' name='student[password]' required /><br /><br />
   <button type='submit'>Register</button>
 </form>

@@ -1,0 +1,16 @@
+
+
+
+<%if !Subject.all.empty? %>
+    Subjects: <%Subject.all.each do |subject| %>
+            <input id="<%= subject.name %>" type="checkbox" name="subjects[]" value="<%= subject.name %>"><%=subject.name%> </input>
+            <%end %>
+            <br /><br />
+<%end %>
+
+<%if !Instrument.all.empty? %>
+    Instruments: <%Instrument.all.each do |instrument| %>
+            <input id="<%= instrument.name %>" type="checkbox" name="instruments[]" value="<%= instrument.name %>"><%=instrument.name%> </input>
+            <%end %>
+            <br /><br />
+<%end %>
