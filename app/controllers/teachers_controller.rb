@@ -1,7 +1,10 @@
 class TeachersController <  ApplicationController
 
   get '/teachers/new' do
-    erb :'teachers/create_teacher'
+    if session[:id]
+      session.clear
+      erb :'teachers/create_teacher'
+    end
   end
 
   get '/teachers/login' do
@@ -11,13 +14,7 @@ class TeachersController <  ApplicationController
     end
   end
 
-  get '/teachers/refresh' do
-    session.clear
-    erb :index
-  end
-
   post '/teachers/login' do
-
     @teacher = Teacher.find_by(name: params[:teacher][:name])
     if @teacher && @teacher.authenticate(params[:teacher][:password])
       session[:id] = @teacher.id
