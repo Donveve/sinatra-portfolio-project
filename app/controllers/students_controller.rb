@@ -43,17 +43,33 @@ class StudentsController <  ApplicationController
     @student = Student.find(session[:id])
     @student.instruments = []
     @student.subjects = []
-    params[:instruments].each do |t|
-    binding.pry
-      @student.instruments << Instrument.find_by(name: t)
+
+    if params[:instruments]
+      params[:instruments].each do |t|
+        @student.instruments << Instrument.find_by(name: t)
+      end
     end
 
-    params[:subjects].each do |t|
-      @student.subjects << Subject.find_by(name: t)
+    if params[:subjects]
+      params[:subjects].each do |t|
+        @student.subjects << Subject.find_by(name: t)
+      end
     end
 
     redirect '/students/show'
   end
 
+  delete '/students/:id/delete' do
+    if session[:id] == params[:id].to_i
+    @student = Student.find(params[:id])
+    @student.destroy
+  end
+    redirect '/'
+  end
+
+  get '/logout' do
+    session.clear
+    redirect '/users/login'
+  end
 
 end
