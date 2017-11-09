@@ -1,3 +1,6 @@
+require 'sinatra'
+require 'sinatra/flash'
+
 class StudentsController <  ApplicationController
 
   get '/students/new' do

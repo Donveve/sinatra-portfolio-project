@@ -3,15 +3,15 @@ class TeachersController <  ApplicationController
   get '/teachers/new' do
     if session[:id]
       session.clear
-      erb :'teachers/create_teacher'
     end
+      erb :'teachers/create_teacher'
   end
 
   get '/teachers/login' do
     if session[:id]
       session.clear
-      erb :'/teachers/login'
     end
+      erb :'/teachers/login'
   end
 
   post '/teachers/login' do
@@ -33,6 +33,21 @@ class TeachersController <  ApplicationController
   get '/teachers/show' do
     @teacher = Teacher.find(session[:id])
     erb :'/teachers/show'
+  end
+
+  get '/teachers/edit_assignments' do
+    erb:'/teachers/edit_assignments'
+  end
+
+  patch '/teachers/edit_assignments' do
+    binding.pry
+    Instruments = []
+    Subjects = []
+    redirect '/teachers/display_assignments'
+  end
+
+  get '/teachers/display_assignments' do
+    erb :'/teachers/display_assignments'
   end
 
   get '/teachers/:id/edit' do
@@ -68,7 +83,7 @@ class TeachersController <  ApplicationController
   get '/teachers/:id/delete' do
     if session[:id] == params[:id].to_i
     @teacher = Teacher.find(params[:id])
-  end
+    end
     erb :'/teachers/delete'
   end
 
@@ -77,7 +92,7 @@ class TeachersController <  ApplicationController
     @teacher = Teacher.find(params[:id])
     @teacher.destroy
     session.clear
-  end
+    end
     redirect '/'
   end
 
