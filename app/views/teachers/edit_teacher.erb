@@ -1,12 +1,14 @@
 <h1>Hello <%= @teacher.name %></h1>
 
 <h3>Your student list:</h3>
-  <%@teacher.students.each do |s| %>
-     <input id="<%= s.name %>" type="checkbox" name="students[]" value='<%= student.name %>' <%='checked' %>><%=student.name%> </input>
-  <%end %>
+<%@teacher.students.each do |s| %>
+  <input id="<%= s.name %>" type="checkbox" name="students[]"
+   value='<%= student.name %>' <%='checked' %>><%=student.name%>
+  </input>
+<%end %>
 
-<h3>Add students</h3>
-  <%Students.all.each do |s| %>
+<h3>Add students:</h3>
+<%Student.all.each do |s| %>
   <ul>
     <li>
       <%if !@teacher.students.include?(s) %>
@@ -14,6 +16,8 @@
       <%end %>
     </li>
   </ul>
+<%end %>
+
 
 <form method="get" action='/teachers/logout'>
   <input type='submit' id='signout' value='Sign Out' name='signout' />
