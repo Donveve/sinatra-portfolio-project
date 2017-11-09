@@ -1,14 +1,21 @@
+<% if Helpers.is_logged_in?(session) %>
 
+  <H1>Hello <%= @student.name %></H1>
+  <br /><br />
+  <p>
+    Your teacher is <%= @student.teacher %>
+  </p>
+  <br />
+  <input type='integer' name='grade' id='grade' required/>
 
-
-<%if !Subject.all.empty? %>
+<h2>Feel free to edit your list of subjects:</h2>
     Subjects: <%Subject.all.each do |subject| %>
             <input id="<%= subject.name %>" type="checkbox" name="subjects[]" value="<%= subject.name %>"><%=subject.name%> </input>
             <%end %>
             <br /><br />
-<%end %>
 
-<%if !Instrument.all.empty? %>
+
+<h2>You can edit your list of instruments here:</h2>
     Instruments: <%Instrument.all.each do |instrument| %>
             <input id="<%= instrument.name %>" type="checkbox" name="instruments[]" value="<%= instrument.name %>"><%=instrument.name%> </input>
             <%end %>

@@ -31,4 +31,16 @@ class StudentsController <  ApplicationController
   get '/students/login' do
     erb :'/students/login'
   end
+
+  get '/students/:id/edit' do
+    @sstudent = Student.find(session[:id])
+    erb :'/students/edit_student'
+  end
+
+  post '/students/:id/edit' do
+
+    redirect '/students/show'
+  end
+
+
 end
