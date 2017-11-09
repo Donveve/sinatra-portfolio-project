@@ -1,7 +1,6 @@
 class StudentsController <  ApplicationController
 
   get '/students/new' do
-
     if session[:id]
       redirect '/students/show'
     else
@@ -12,7 +11,6 @@ class StudentsController <  ApplicationController
   post '/students/new' do
     student = Student.create(params[:student])
     session[:id] = student.id
-binding.pry
     redirect '/students/show'
   end
 
@@ -23,7 +21,6 @@ binding.pry
 
   get '/students/login' do
     if session[:id]
-      binding.pry
       redirect '/students/show'
     else
       erb :'/students/login'
@@ -32,7 +29,7 @@ binding.pry
 
   post '/students/login' do
     @student = Student.find_by(name: params[:student][:name])
-    if @student && @student.authenticate(params[:password])
+    if @student && @student.authenticate(params[:student][:password])
       session[:id] = @student.id
       redirect '/students/show'
     else
@@ -84,7 +81,7 @@ binding.pry
 
   get '/students/logout' do
     session.clear
-    redirect '/users/login'
+    redirect '/students/login'
   end
 
 end

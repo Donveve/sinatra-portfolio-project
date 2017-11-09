@@ -9,9 +9,9 @@ class TeachersController <  ApplicationController
   end
 
   post '/teachers/login' do
-    binding.pry
-    @teacher = Teacher.find_by(name: params[:name])
-    if @teacher && @teacher.authenticate(params[:password])
+
+    @teacher = Teacher.find_by(name: params[:teacher][:name])
+    if @teacher && @teacher.authenticate(params[:teacher][:password])
       session[:id] = @teacher.id
       redirect '/teachers/show'
     else
@@ -46,6 +46,7 @@ class TeachersController <  ApplicationController
     if session[:id] == params[:id].to_i
     @teacher = Teacher.find(params[:id])
     @teacher.destroy
+    session.clear
   end
     redirect '/'
   end
