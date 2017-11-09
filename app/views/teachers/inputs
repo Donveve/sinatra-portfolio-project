@@ -1,0 +1,35 @@
+<%else %>
+  <p>
+    You do not have any students. <a href="/teachers/<%= @teacher.id/edit %>">Visit Edit</a> page to add students and/or make changes to subjects and instruments
+  </p>
+<%if !@student.subjects.empty? %>
+  <h3>You have completed:</h3><br />
+  <%@student.subjects.each do |s| %>
+    <%= s.name %>
+    <br />
+  <%end %>
+<%else %>
+  <p>You haven't finished any subjects today.</p>
+<%end %>
+
+<%if !@student.instruments.empty? %>
+  <h3>Today you practiced:</h3><br />
+  <%@student.instruments.each do |s| %>
+    <%= s.name %>
+    <br />
+  <%end %>
+<%else %>
+    <p>You haven't practiced any instruments today</p>
+<%end %>
+<br /><br />
+<a href="/students/<%=@student.id%>/edit">Need to make corrections or additions?</a>
+<br /><br />
+<form method="get" action='/students/logout'>
+  <input type='subit' id='signout' value='Sign Out' name='signout' />
+</form>
+<br /><br />
+<form method="POST" action="/students/<%=@student.id%>/delete">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input id="delete" type="submit" name="delete" value="Want to delete your account?">
+</form>
+<%end %>
