@@ -1,15 +1,15 @@
 <% if Helpers.is_logged_in?(session) %>
 
   <H1>Hello <%= @student.name %></H1>
-  <br /><br />
+  <br />
   <p>
-    Your teacher is: <%= @student.teacher %>
+    Your teacher is: <%= @student.teacher %> <br />
   </p>
 
-<form method="post" action="/students/<%= :id %>@student.id/edit">
+<form method="post" action="/students/<%= @student.id%>/edit">
   <input id="hidden" type="hidden" name="_method" value="patch">
 
-  <h2>Feel free to edit your list of subjects:</h2>
+  <h2>Check off the subjects you completed today:</h2>
       <br />
       <%Subject.all.each do |subject| %>
         <input id="<%= subject.name %>" type="checkbox" name="subjects[]" value='<%= subject.name %>'><%=subject.name%> </input>
@@ -17,13 +17,13 @@
       <%end %>
               <br /><br />
 
-  <h2>You can edit your list of instruments here:</h2>
+  <h2>Check off the instruments you practiced today:</h2>
       <br />
       <%Instrument.all.each do |instrument| %>
         <input id="<%= instrument.name %>" type="checkbox" name="instruments[]" value="<%= instrument.name %>"><%=instrument.name%> </input>
         <br />
       <%end %>
     <br /><br />
-    <input type="submit" name="Make Changes" value="Make Changes" />
+    <input type="submit" name="Submit Coursework" value="Submit Coursework" />
 </form>
 <%end %>

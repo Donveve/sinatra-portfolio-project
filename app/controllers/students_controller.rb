@@ -34,10 +34,22 @@ class StudentsController <  ApplicationController
 
   get '/students/:id/edit' do
     @student = Student.find(session[:id])
+
     erb :'/students/edit_student'
   end
 
-  post '/students/:id/edit' do
+  patch '/students/:id/edit' do
+binding.pry
+    @student = Student.find(session[:id])
+    @student.instruments = []
+    @student.subjects = []
+    params[:instruments].each do |t|
+      @student.instruments << t
+    end
+
+    params[:subjects].each do |t|
+      @student.subjects << t
+    end
 
     redirect '/students/show'
   end
