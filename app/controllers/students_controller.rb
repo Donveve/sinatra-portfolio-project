@@ -8,6 +8,11 @@ class StudentsController <  ApplicationController
     end
   end
 
+  get 'students/refresh' do
+    session.clear
+    erb :index
+  end
+
   post '/students/new' do
     student = Student.create(params[:student])
     session[:id] = student.id

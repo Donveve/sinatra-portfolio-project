@@ -5,7 +5,16 @@ class TeachersController <  ApplicationController
   end
 
   get '/teachers/login' do
-    erb :'/teachers/login'
+    if session[:id]
+      redirect '/teachers/show'
+    else
+      erb :'/teachers/login'
+    end
+  end
+
+  get '/teachers/refresh' do
+    session.clear
+    erb :index
   end
 
   post '/teachers/login' do
