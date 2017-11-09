@@ -3,8 +3,8 @@ class StudentsController <  ApplicationController
   get '/students/new' do
     if session[:id]
       session.clear
-      erb :'students/create_student'
     end
+      erb :'students/create_student'
   end
 
   post '/students/new' do
@@ -21,8 +21,8 @@ class StudentsController <  ApplicationController
   get '/students/login' do
     if session[:id]
       session.clear
-      erb :'/students/login'
     end
+      erb :'/students/login'
   end
 
   post '/students/login' do
