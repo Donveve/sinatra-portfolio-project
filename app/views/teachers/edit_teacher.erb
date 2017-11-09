@@ -1,27 +1,22 @@
 <h1>Hello <%= @teacher.name %></h1>
 
-<table style="width:100%">
-  <tr>
-    <th>Your student list:</th>
-    <th>Add students:</th>
-  </tr>
-  <tr>
-    <td>
-      <%@teacher.students.each do |s| %>
-        <input id="<%= s.name %>" type="checkbox" name="students[]"
-         value='<%= student.name %>' <%='checked' %>><%=student.name%>
-        </input>
-      <%end %>
-    </td>
-    <td>
-      <%Student.all.each do |s| %>
-        <%if !@teacher.students.include?(s) %>
-        <%= s.name %>
-        <%end %>
-      <%end %>
-    </td>
-  </tr>
-</table>
+<h3>Your student list:</h3>
+  <%@teacher.students.each do |s| %>
+    <input id="<%= s.name %>" type="checkbox" name="students[]"
+     value='<%= student.name %>' <%='checked' %>><%=student.name%>
+   </input>
+   <br />
+<%end %>
+
+<h3>Add students:</h3>
+  <%Student.all.each do |s| %>
+    <%if !@teacher.students.include?(s) %>
+      <input id="<%= s.name %>" type="checkbox" name="students_new[]"
+       value='<%= s.name %>' <%='checked' %>><%=s.name%>
+        <br />
+    <%end %>
+  <%end %>
+
 
 <br /><br />
 <form method="get" action='/teachers/logout'>
