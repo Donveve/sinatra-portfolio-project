@@ -15,9 +15,9 @@
     </td>
     <td>
       <%Student.all.each do |s| %>
-
+        <%if !@teacher.students.include?(s) %>
         <%= s.name %>
-        
+        <%end %>
       <%end %>
     </td>
   </tr>

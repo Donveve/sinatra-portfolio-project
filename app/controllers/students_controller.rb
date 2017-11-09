@@ -31,7 +31,7 @@ binding.pry
   end
 
   post '/students/login' do
-    @student = Student.find_by(name: params[:name])
+    @student = Student.find_by(name: params[:student][:name])
     if @student && @student.authenticate(params[:password])
       session[:id] = @student.id
       redirect '/students/show'
