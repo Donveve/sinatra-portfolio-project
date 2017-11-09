@@ -28,6 +28,10 @@
 <br /><br />
   <a href="/students/<%=@student.id%>/edit">Need to make corrections or additions?</a>
   <br /><br />
+  <form method="get" action='/students/logout'>
+    <input type='subit' id='signout' value='Sign Out' name='signout' />
+  </form>
+  <br /><br />
   <form method="POST" action="/students/<%=@student.id%>/delete">
     <input id="hidden" type="hidden" name="_method" value="delete">
     <input id="delete" type="submit" name="delete" value="Want to delete your account?">
