@@ -30,7 +30,7 @@ binding.pry
     end
   end
 
-  post '/login' do
+  post '/students/login' do
     @student = Student.find_by(name: params[:name])
     if @student && @student.authenticate(params[:password])
       session[:id] = @student.id
@@ -67,8 +67,14 @@ binding.pry
     redirect '/students/show'
   end
 
+  get '/students/:id/delete' do
+    if session[:id] == params[:id].to_i
+    @student = Student.find(params[:id])
+  end
+    erb :'/students/delete'
+  end
+
   delete '/students/:id/delete' do
-    binding.pry
     if session[:id] == params[:id].to_i
     @student = Student.find(params[:id])
     @student.destroy
@@ -76,7 +82,7 @@ binding.pry
     redirect '/'
   end
 
-  get '/logout' do
+  get '/students/logout' do
     session.clear
     redirect '/users/login'
   end

@@ -31,6 +31,26 @@ class TeachersController <  ApplicationController
 
   get '/teachers/:id/edit' do
     @teacher = Teacher.find(session[:id])
-    redirect :'/teachers/edit_teacher'
+    erb :'/teachers/edit_teacher'
+  end
+
+  get '/teachers/:id/delete' do
+    if session[:id] == params[:id].to_i
+    @teacher = Teacher.find(params[:id])
+  end
+    erb :'/teachers/delete'
+  end
+
+  delete '/teachers/:id/delete' do
+    if session[:id] == params[:id].to_i
+    @teacher = Teacher.find(params[:id])
+    @teacher.destroy
+  end
+    redirect '/'
+  end
+
+  get '/teachers/logout' do
+    session.clear
+    redirect '/teachers/login'
   end
 end

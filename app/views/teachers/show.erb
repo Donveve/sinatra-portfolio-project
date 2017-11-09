@@ -13,7 +13,7 @@
 
     <%if @teacher.students.empty? %>
         <p>
-          You do not have any students. <a href="/teachers/<%= @teacher.id%>/edit %>"><br /><br />Visit Edit</a> page to add students and/or make changes to subjects and instruments
+          You do not have any students. <a href= "/teachers/<%=@teacher.id%>/edit" /> <br /><br />Visit Edit</a> page to add students and/or make changes to subjects and instruments
         </p>
 
       <%else %>
@@ -37,6 +37,13 @@
 
 
 <br /><br /><br />
+
   <form method="get" action='/teachers/logout'>
     <input type='submit' id='signout' value='Sign Out' name='signout' />
+  </form>
+
+  <br /><br />
+  <form method="get" action="/teachers/<%=@teacher.id%>/delete">
+    <input id="hidden" type="hidden" name="_method" value="delete">
+    <input id="delete" type="submit" name="delete" value="Want to delete your account?">
   </form>

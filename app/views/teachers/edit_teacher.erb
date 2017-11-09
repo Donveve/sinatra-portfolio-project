@@ -1,5 +1,26 @@
 <h1>Hello <%= @teacher.name %></h1>
 
-<form method="get" action='/students/logout'>
-  <input type='subit' id='signout' value='Sign Out' name='signout' />
+<h3>Your student list:</h3>
+  <%@teacher.students.each do |s| %>
+     <input id="<%= s.name %>" type="checkbox" name="students[]" value='<%= student.name %>' <%='checked' %>><%=student.name%> </input>
+  <%end %>
+
+<h3>Add students</h3>
+  <%Students.all.each do |s| %>
+  <ul>
+    <li>
+      <%if !@teacher.students.include?(s) %>
+      <%= s.name %>
+      <%end %>
+    </li>
+  </ul>
+
+<form method="get" action='/teachers/logout'>
+  <input type='submit' id='signout' value='Sign Out' name='signout' />
+</form>
+
+<br />
+<form method="get" action="/teachers/<%=@teacher.id%>/delete">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input id="delete" type="submit" name="delete" value="Want to delete your account?">
 </form>
