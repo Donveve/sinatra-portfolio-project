@@ -1,6 +1,9 @@
 <h1>Hello <%= @teacher.name %></h1>
 
 <h3>Your student list:</h3>
+ <%if @teacher.students.empty? %>
+    <p>  No current students</p>
+  <%end %>
   <%@teacher.students.each do |s| %>
     <input id="<%= s.name %>" type="checkbox" name="students[]"
      value='<%= student.name %>' <%='checked' %>><%=student.name%>
