@@ -33,7 +33,7 @@ class StudentsController <  ApplicationController
   end
 
   get '/students/:id/edit' do
-    @sstudent = Student.find(session[:id])
+    @student = Student.find(session[:id])
     erb :'/students/edit_student'
   end
 
