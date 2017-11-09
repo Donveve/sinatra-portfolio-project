@@ -13,7 +13,7 @@
       <br />
 
       <%Subject.all.each do |subject| %>
-    
+
         <input id="<%= subject.name %>" type="checkbox" name="subjects[]" value='<%= subject.name %>' <%='checked' if @student.subjects.include?(subject) %>><%=subject.name%> </input>
           <br />
       <%end %>
@@ -22,10 +22,12 @@
   <h2>Check off the instruments you practiced today:</h2>
       <br />
       <%Instrument.all.each do |instrument| %>
-        <input id="<%= instrument.name %>" type="checkbox" name="instruments[]" value="<%= instrument.name %>" <%='checked' if @student.instruments.include?(instrument.name) %>><%=instrument.name%> </input>
+        <input id="<%= instrument.name %>" type="checkbox" name="instruments[]" value="<%= instrument.name %>" <%='checked' if @student.instruments.include?(instrument) %>><%=instrument.name%> </input>
         <br />
       <%end %>
     <br /><br />
     <input type="submit" name="Submit Coursework" value="Submit Coursework" />
 </form>
+<br /><br />
+  <a href='/students/show'>Head to display page without making changes.</a>
 <%end %>

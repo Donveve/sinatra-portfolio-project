@@ -1,8 +1,9 @@
 class StudentsController <  ApplicationController
 
   get '/students/new' do
+
     if session[:id]
-      redirect '/show'
+      redirect '/students/show'
     else
       erb :'students/create_student'
     end
@@ -11,25 +12,32 @@ class StudentsController <  ApplicationController
   post '/students/new' do
     student = Student.create(params[:student])
     session[:id] = student.id
-    # if params[:instruments]
-    #   student.instruments << params[:instrument]
-    # end
-    #
-    # if params[:subjects]
-    #   student.instruments << params[:subjects]
-    # end
-
+binding.pry
     redirect '/students/show'
   end
 
   get '/students/show' do
     @student = Student.find(session[:id])
-
     erb :'/students/show'
   end
 
   get '/students/login' do
-    erb :'/students/login'
+    if session[:id]
+      binding.pry
+      redirect '/students/show'
+    else
+      erb :'/students/login'
+    end
+  end
+
+  post '/login' do
+    @student = Student.find_by(name: params[:name])
+    if @student && @student.authenticate(params[:password])
+      session[:id] = @student.id
+      redirect '/students/show'
+    else
+      redirect '/students/login'
+    end
   end
 
   get '/students/:id/edit' do
@@ -60,6 +68,7 @@ class StudentsController <  ApplicationController
   end
 
   delete '/students/:id/delete' do
+    binding.pry
     if session[:id] == params[:id].to_i
     @student = Student.find(params[:id])
     @student.destroy
