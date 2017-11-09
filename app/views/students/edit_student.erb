@@ -1,9 +1,9 @@
 <% if Helpers.is_logged_in?(session) %>
-
+<%t=Time.now %>
   <H1>Hello <%= @student.name %></H1>
   <br />
   <p>
-    Your teacher is: <%= @student.teacher %> <br />
+    Today is <%=t.strftime("%A") %>, <%= t.strftime("%B") %> <%= t.strftime("%w") %>, <%= t.strftime("%Y") %> <br />
   </p>
 
 <form method="post" action="/students/<%= @student.id%>/edit">

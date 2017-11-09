@@ -39,16 +39,17 @@ class StudentsController <  ApplicationController
   end
 
   patch '/students/:id/edit' do
-binding.pry
+
     @student = Student.find(session[:id])
     @student.instruments = []
     @student.subjects = []
     params[:instruments].each do |t|
-      @student.instruments << t
+    binding.pry
+      @student.instruments << Instrument.find_by(name: t)
     end
 
     params[:subjects].each do |t|
-      @student.subjects << t
+      @student.subjects << Subject.find_by(name: t)
     end
 
     redirect '/students/show'
