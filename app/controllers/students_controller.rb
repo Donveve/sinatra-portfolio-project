@@ -75,13 +75,14 @@ class StudentsController <  ApplicationController
     if session[:id] == params[:id].to_i
     @student = Student.find(params[:id])
     @student.destroy
+    session.clear
   end
     redirect '/'
   end
 
   get '/students/logout' do
     session.clear
-    redirect '/students/login'
+    redirect '/'
   end
 
 end

@@ -5,12 +5,12 @@ To DO
 2. FROM teacher edit page  
     does sign out work?
     does delete account work?
-
+3. What happens when I return to the page if I DON'T sign out????
 
 X_ Teacher Log in
 X_ Teacher registration
-_ Teacher log Out
-_ Teacher delete account
+X_ Teacher log Out
+X_ Teacher delete account
 _ Teacher edit student list
 _ Teacher edit list of subjects and Instruments
 _ Teacher display student list

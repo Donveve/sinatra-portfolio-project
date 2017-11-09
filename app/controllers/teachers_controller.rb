@@ -53,6 +53,6 @@ class TeachersController <  ApplicationController
 
   get '/teachers/logout' do
     session.clear
-    redirect '/teachers/login'
+    redirect '/'
   end
 end
