@@ -18,14 +18,14 @@
 
       <%else %>
         <% @teacher.students.each do |s| %>
-          <h3><%= s.name %></h3> <br />
+          <h2><%= s.name %></h2> <br />
             <h4>Subjects Completed</h4> <br />
                 <%s.subjects.each do |t| %>
                   <p>
                     <%= t.name %>   <br
                   </p>
                 <%end %> <br />
-          <%end %>
+
             <h4>Instruments Practiced</h4> <br />
                 <%s.instruments.each do |t| %>
                   <p>
@@ -33,6 +33,7 @@
                   </p>
                 <%end %> <br /><br />
         <%end %>
+    <%end %>
   <%end %>
 
 

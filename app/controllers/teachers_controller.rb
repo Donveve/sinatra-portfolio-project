@@ -35,6 +35,25 @@ class TeachersController <  ApplicationController
     erb :'/teachers/edit_teacher'
   end
 
+  patch '/teachers/:id/edit' do
+
+    @teacher = Teacher.find(session[:id])
+    @teacher.students = []
+    if params[:students]
+      params[:students].each do |t|
+        @teacher.students << Student.find_by(name: t)
+      end
+    end
+
+    if params[:students_new]
+      params[:students_new].each do |t|
+        @teacher.students << Student.find_by(name: t)
+      end
+    end
+
+    erb :'/teachers/show'
+  end
+
   get '/teachers/:id/delete' do
     if session[:id] == params[:id].to_i
     @teacher = Teacher.find(params[:id])

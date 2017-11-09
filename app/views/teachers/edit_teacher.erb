@@ -1,5 +1,7 @@
 <h1>Hello <%= @teacher.name %></h1>
 
+<form method="post" action="/teachers/<%= @teacher.id%>/edit">
+  <input id="hidden" type="hidden" name="_method" value="patch">
 <h3>Your student list:</h3>
  <%if @teacher.students.empty? %>
     <p>  No current students</p>
@@ -19,7 +21,9 @@
         <br />
     <%end %>
   <%end %>
-
+  <br />
+  <input type='submit' id='edit' value='Submit Changes' name='edit' />
+</form>
 
 <br /><br />
 <form method="get" action='/teachers/logout'>
