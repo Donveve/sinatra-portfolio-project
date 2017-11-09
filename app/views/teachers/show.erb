@@ -18,7 +18,7 @@
 
       <%else %>
         <% @teacher.students.each do |s| %>
-          <h2><%= s.name %></h2> <br />
+          <h2> <a href='../../teachers/<%= s.id %>/show_student'><%= s.name %></a> </h2> <br />
             <h4>Subjects Completed</h4> <br />
                 <%s.subjects.each do |t| %>
                   <p>

@@ -1,0 +1,33 @@
+<% if Helpers.is_logged_in?(session) %>
+  <H1>Hello <%=@teacher.name %></H1>
+  <br />
+  <p>
+    <%t=Time.now %>
+    Today is <%=t.strftime("%A") %>, <%= t.strftime("%B") %> <%= t.strftime("%w") %>, <%= t.strftime("%Y") %> <br />
+  </p>
+
+  <%if !@student.subjects.empty? %>
+    <h3><%= @student.name %> has completed:</h3><br />
+    <%@student.subjects.each do |s| %>
+      <%= s.name %>
+      <br />
+    <%end %>
+  <%else %>
+    <p><%=@student.name%> hasn't finished any subjects today.</p>
+  <%end %>
+
+  <%if !@student.instruments.empty? %>
+  <h3><%= @student.name %> has practiced:</h3><br />
+    <%@student.instruments.each do |s| %>
+      <%= s.name %>
+      <br />
+    <%end %>
+  <%else %>
+      <p><%= @student.name %> hasn't practiced any instruments today</p>
+  <%end %>
+<br /><br />
+
+  <a href="/teachers/show">Return to student view</a>
+  <br /><br />
+
+<%end %>

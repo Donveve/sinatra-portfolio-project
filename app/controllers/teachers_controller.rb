@@ -54,6 +54,12 @@ class TeachersController <  ApplicationController
     erb :'/teachers/show'
   end
 
+  get '/teachers/:id/show_student' do
+    @student = Student.find(params[:id])
+    @teacher = Teacher.find(session[:id])
+    erb :'/teachers/show_student'
+  end
+
   get '/teachers/:id/delete' do
     if session[:id] == params[:id].to_i
     @teacher = Teacher.find(params[:id])
@@ -74,4 +80,5 @@ class TeachersController <  ApplicationController
     session.clear
     redirect '/'
   end
+
 end
