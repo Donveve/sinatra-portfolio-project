@@ -1,5 +1,3 @@
-require 'sinatra'
-require 'sinatra/flash'
 
 class StudentsController <  ApplicationController
 
