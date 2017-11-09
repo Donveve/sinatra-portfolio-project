@@ -1,6 +1,6 @@
 <% if Helpers.is_logged_in?(session) %>
   <H1>Hello <%=@student.name %></H1>
-  <h6>  (if not <%=@student.name %> <a href="  " > click here.)</a> </h6>
+  <h6>  (if not <%=@student.name %> <a href="students/refresh" > click here.)</a> </h6>
   <br />
   <p>
     <%t=Time.now %>

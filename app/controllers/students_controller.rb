@@ -2,8 +2,7 @@ class StudentsController <  ApplicationController
 
   get '/students/new' do
     if session[:id]
-      redirect '/students/show'
-    else
+      session.clear
       erb :'students/create_student'
     end
   end

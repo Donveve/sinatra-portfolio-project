@@ -6,8 +6,7 @@ class TeachersController <  ApplicationController
 
   get '/teachers/login' do
     if session[:id]
-      redirect '/teachers/show'
-    else
+      session.clear
       erb :'/teachers/login'
     end
   end
