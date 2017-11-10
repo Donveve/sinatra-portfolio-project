@@ -40,13 +40,12 @@
 <form method=get action='/teachers/edit_assignments'>
   <input type="submit" id='edit_assignments' value="Edit Subjects and Instruments" name="edit_assignments" />
 </form>
-<br /><br /><br />
+<br />
 
   <form method="get" action='/teachers/logout'>
     <input type='submit' id='signout' value='Sign Out' name='signout' />
   </form>
-
-  <br /><br />
+<br />
   <form method="get" action="/teachers/<%=@teacher.id%>/delete">
     <input id="hidden" type="hidden" name="_method" value="delete">
     <input id="delete" type="submit" name="delete" value="Want to delete your account?">

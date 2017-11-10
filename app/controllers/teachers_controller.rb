@@ -40,18 +40,28 @@ class TeachersController <  ApplicationController
   end
 
   patch '/teachers/edit_assignments' do
-    binding.
-
     params[:new_subject].each do |s|
       if !s.empty?
-          Subjects << Subject.create(name: s)
-        end
+          Subject.create(name: s )
+      end
     end
 
     params[:new_instrument].each do |i|
       if !i.empty?
-          Instruments << Instrument.create(name: '#{i}')
-        end
+          Instrument.create(name: i)
+      end
+    end
+
+    if params[:subjects]
+      params[:subjects].each do |t|
+        Subject.find_by(name: t).destroy
+      end
+    end
+
+    if params[:instruments]
+      params[:instruments].each do |t|
+        Instrument.find_by(name: t).destroy
+      end
     end
     redirect '/teachers/display_assignments'
   end

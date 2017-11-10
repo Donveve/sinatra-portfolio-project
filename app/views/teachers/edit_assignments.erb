@@ -4,9 +4,10 @@
   <input id="hidden" type="hidden" name="_method" value="patch">
 
 <h2>Current subjects</h2>
+<h6>Need to delete something? Check the box and it will be removed.</h6><br />
 <%Subject.all.each do |subject| %>
   <ul>
-    <li><%=subject.name %></li>
+    <li> <input id="<%= subject.name %>" type="checkbox" name="subjects[]" value="<%= subject.name %>" ><%=subject.name%> </input></li>
   </ul>
 <%end %>
         <br />
@@ -19,9 +20,10 @@
     <br />
 
 <h2>Current Instruments:</h2>
+<h6>To remove an instrument, check the box.</h6><br />
 <%Instrument.all.each do |instrument| %>
   <ul>
-    <li><%=instrument.name %></li>
+      <li> <input id="<%= instrument.name %>" type="checkbox" name="instruments[]" value="<%= instrument.name %>" ><%=instrument.name%> </input></li>
   </ul>
 <%end %>
 <br />

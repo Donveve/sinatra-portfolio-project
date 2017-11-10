@@ -17,7 +17,7 @@
   <%Student.all.each do |s| %>
     <%if !@teacher.students.include?(s) %>
       <input id="<%= s.name %>" type="checkbox" name="students_new[]"
-       value='<%= s.name %>' <%='checked' %>><%=s.name%>
+       value='<%= s.name %>' ><%=s.name%>
         <br />
     <%end %>
   <%end %>
