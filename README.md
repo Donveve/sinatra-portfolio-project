@@ -13,21 +13,20 @@ Future versions will include:
   - Daily record keeping for a more complete system.
   - Ability for parent to assign particular subjects to a student, instead of all subjects being displayed.
 
-Installation
+# Installation
 
 clone 
 run bundle install 
 run rake db:migrate, 
 shotgun!
 
-Contributing
+# Contributing
 
 Collaboration, bug reports and any other pull requests are welcome on GitHub.
 
-License
+# License
 
 The gem is available as open source under the terms of the MIT License.
-
 
 Licensing:
 MIT License
