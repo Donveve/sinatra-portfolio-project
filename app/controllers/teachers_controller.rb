@@ -15,7 +15,8 @@ class TeachersController <  ApplicationController
   end
 
   post '/teachers/login' do
-    @teacher = Teacher.find_by(name: params[:teacher][:name])
+
+    @teacher = Teacher.find_by(username: params[:teacher][:username])
     if @teacher && @teacher.authenticate(params[:teacher][:password])
       session[:id] = @teacher.id
       redirect '/teachers/show'
