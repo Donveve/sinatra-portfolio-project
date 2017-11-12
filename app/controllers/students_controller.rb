@@ -27,7 +27,7 @@ class StudentsController <  ApplicationController
   end
 
   post '/students/login' do
-    @student = Student.find_by(name: params[:student][:name])
+    @student = Student.find_by(username: params[:student][:username])
     if @student && @student.authenticate(params[:student][:password])
       session[:id] = @student.id
       redirect '/students/show'
