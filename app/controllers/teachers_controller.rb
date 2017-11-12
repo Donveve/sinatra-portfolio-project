@@ -26,9 +26,13 @@ class TeachersController <  ApplicationController
   end
 
   post '/teachers/new' do
-    teacher = Teacher.create(params[:teacher])
-    session[:id] = teacher.id
-    redirect '/teachers/show'
+    teacher = Teacher.new(params[:teacher])
+    if teacher.save
+      session[:id] = teacher.id
+      redirect '/teachers/show'
+    else
+      erb :'teachers/create_teacher'
+    end
   end
 
   get '/teachers/show' do

@@ -9,9 +9,13 @@ class StudentsController <  ApplicationController
   end
 
   post '/students/new' do
-    student = Student.create(params[:student])
-    session[:id] = student.id
-    redirect '/students/show'
+    student = Student.new(params[:student])
+    if student.save
+      session[:id] = student.id
+      redirect '/students/show'
+    else
+      erb :'students/create_student'
+    end
   end
 
   get '/students/show' do
