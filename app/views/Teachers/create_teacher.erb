@@ -2,7 +2,6 @@
 <h3>Register below:</h3>
 
 <% if @teacher && @teacher.errors.any? %>
-<% binding.pry %>
 <%=  @teacher.errors.full_messages %>
 <br />
 <%end%>

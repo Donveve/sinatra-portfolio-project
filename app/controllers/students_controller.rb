@@ -14,7 +14,7 @@ class StudentsController <  ApplicationController
       session[:id] = @student.id
       redirect '/students/show'
     else
-      
+
       erb :'students/create_student'
     end
   end
@@ -28,6 +28,7 @@ class StudentsController <  ApplicationController
     if session[:id]
       session.clear
     end
+      session[:failure_message] = "That log in wasn't quite right. Please try again."
       erb :'/students/login'
   end
 

@@ -20,6 +20,7 @@ class TeachersController <  ApplicationController
       session[:id] = @teacher.id
       redirect '/teachers/show'
     else
+      session[:failure_message] = "That log in wasn't quite right. Please try again."
       redirect '/teachers/login'
     end
   end

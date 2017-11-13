@@ -15,7 +15,12 @@
 </head>
 <body>
   <div class="wrapper">
-
+    <% if session[:failure_message] %>
+        <p style="color:red;">
+          <%= session[:failure_message] %>
+        </p>
+      <% end %>
+      <br />
       <%= yield %>
 
     <footer class="branding">
