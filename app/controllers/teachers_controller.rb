@@ -15,7 +15,6 @@ class TeachersController <  ApplicationController
   end
 
   post '/teachers/login' do
-
     @teacher = Teacher.find_by(username: params[:teacher][:username])
     if @teacher && @teacher.authenticate(params[:teacher][:password])
       session[:id] = @teacher.id
@@ -26,11 +25,12 @@ class TeachersController <  ApplicationController
   end
 
   post '/teachers/new' do
-    teacher = Teacher.new(params[:teacher])
-    if teacher.save
-      session[:id] = teacher.id
+    @teacher = Teacher.new(params[:teacher])
+    if @teacher.save
+      session[:id] = @teacher.id
       redirect '/teachers/show'
     else
+      @teacher.errors[:username]
       erb :'teachers/create_teacher'
     end
   end
