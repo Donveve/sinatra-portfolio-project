@@ -39,7 +39,7 @@ class TeachersController <  ApplicationController
 
   get '/teachers/show' do
     @teacher = current_teacher
-    if @teacher
+    if @teacher != nil
         erb :'/teachers/show'
     else
       session[:need_to_login] = "You need to log in to view this page"
@@ -148,7 +148,7 @@ class TeachersController <  ApplicationController
   end
 
   delete '/teachers/:id/delete' do
-    if is_teacher_logged_in
+    if is_teacher_logged_in?
       if session[:teacher_id] == params[:id].to_i
         @teacher = current_teacher
         @teacher.destroy
@@ -162,7 +162,7 @@ class TeachersController <  ApplicationController
   end
 
   get '/teachers/logout' do
-    if is_teacher_logged_in
+    if is_teacher_logged_in?
       session.clear
       redirect '/'
     else

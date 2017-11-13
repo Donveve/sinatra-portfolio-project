@@ -1,4 +1,4 @@
-    <H1>Hello <%=@teacher.name %></H1>
+    <h1>Hello <%=@teacher.name %></h1>
     <h6>  (if not <%=@teacher.name %> <a href="/" > click here.)</a> </h6>
     <br />
     <p>
@@ -28,7 +28,6 @@
                   </p>
                 <%end %> <br /><br />
         <%end %>
-    <%end %>
   <%end %>
 
 <form method=get action='/teachers/edit_assignments'>
@@ -36,11 +35,12 @@
 </form>
 <br />
 
-  <form method="get" action='/teachers/logout'>
-    <input type='submit' id='signout' value='Sign Out' name='signout' />
-  </form>
+<form method="get" action='/teachers/logout'>
+  <input type='submit' id='signout' value='Sign Out' name='signout' />
+</form>
 <br />
-  <form method="get" action="/teachers/<%=@teacher.id%>/delete">
-    <input id="hidden" type="hidden" name="_method" value="delete">
-    <input id="delete" type="submit" name="delete" value="Want to delete your account?">
-  </form>
+
+<form method="get" action="/teachers/<%=@teacher.id%>/delete">
+  <input id="hidden" type="hidden" name="_method" value="delete">
+  <input id="delete" type="submit" name="delete" value="Want to delete your account?">
+</form>
