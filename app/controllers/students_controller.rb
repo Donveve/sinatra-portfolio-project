@@ -11,10 +11,10 @@ class StudentsController <  ApplicationController
   post '/students/new' do
     @student = Student.new(params[:student])
     if @student.save
-      session[:id] = @student.id
+      session[:student_id] = @student.id
       redirect '/students/show'
     else
-
+      session[:failure_message] = @student.errors.full_messages.to_sentence
       erb :'students/create_student'
     end
   end
@@ -38,6 +38,7 @@ class StudentsController <  ApplicationController
       session[:id] = @student.id
       redirect '/students/show'
     else
+
       redirect '/students/login'
     end
   end

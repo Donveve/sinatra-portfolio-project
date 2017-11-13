@@ -1,15 +1,18 @@
-class Helpers
+module Helpers
 
-    def self.current_user(session)
-        Student.find_by(id: session[:id])
+    def current_student
+        Student.find_by(id: session[:studet_id])
     end
 
-    def self.current_teacher_user(session)
-
-        Teacher.find_by(id: session[:id])
+    def current_teacher #=> Teacher Instance || nil
+        Teacher.find_by(id: session[:teacher_id])
     end
 
-    def self.is_logged_in?(session)
-        !!session[:id]
+    def is_teacher_logged_in?
+        !!current_teacher
+    end
+
+    def is_student_logged_in?
+        !!current_student
     end
 end

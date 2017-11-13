@@ -42,7 +42,11 @@ class TeachersController <  ApplicationController
   end
 
   get '/teachers/edit_assignments' do
-    erb:'/teachers/edit_assignments'
+    if is_teacher_logged_in?
+      erb:'/teachers/edit_assignments'
+    else
+      redirect "/teachers/login"
+    end
   end
 
   patch '/teachers/edit_assignments' do
