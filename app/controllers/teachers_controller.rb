@@ -39,97 +39,136 @@ class TeachersController <  ApplicationController
 
   get '/teachers/show' do
     @teacher = current_teacher
-    erb :'/teachers/show'
+    if @teacher
+        erb :'/teachers/show'
+    else
+      session[:need_to_login] = "You need to log in to view this page"
+      erb :index
+    end
   end
 
   get '/teachers/edit_assignments' do
     if is_teacher_logged_in?
       erb:'/teachers/edit_assignments'
     else
+      session[:need_to_login] = "You need to log in to view this page"
       redirect "/teachers/login"
     end
   end
 
   patch '/teachers/edit_assignments' do
-    params[:new_subject].each do |s|
-      if !s.empty?
-          Subject.create(name: s )
+    if  is_teacher_logged_in?
+      params[:new_subject].each do |s|
+        if !s.empty?
+            Subject.create(name: s )
+        end
       end
-    end
 
-    params[:new_instrument].each do |i|
-      if !i.empty?
-          Instrument.create(name: i)
+      params[:new_instrument].each do |i|
+        if !i.empty?
+            Instrument.create(name: i)
+        end
       end
-    end
 
-    if params[:subjects]
-      params[:subjects].each do |t|
-        Subject.find_by(name: t).destroy
+      if params[:subjects]
+        params[:subjects].each do |t|
+          Subject.find_by(name: t).destroy
+        end
       end
-    end
 
-    if params[:instruments]
-      params[:instruments].each do |t|
-        Instrument.find_by(name: t).destroy
+      if params[:instruments]
+        params[:instruments].each do |t|
+          Instrument.find_by(name: t).destroy
+        end
       end
+      redirect '/teachers/display_assignments'
+    else
+      session[:need_to_login] = "You need to log in to view this page"
+      redirect "/teachers/login"
     end
-    redirect '/teachers/display_assignments'
   end
 
   get '/teachers/display_assignments' do
-    erb :'/teachers/display_assignments'
+    if  is_teacher_logged_in?
+      erb :'/teachers/display_assignments'
+    else
+      session[:need_to_login] = "You need to log in to view this page"
+      redirect "/teachers/login"
+    end
   end
 
   get '/teachers/:id/edit' do
-    @teacher = Teacher.find(session[:teacher_id])
-    erb :'/teachers/edit_teacher'
+    if  is_teacher_logged_in?
+      @teacher = current_teacher
+      erb :'/teachers/edit_teacher'
+    else
+      session[:need_to_login] = "You need to log in to view this page"
+      redirect "/teachers/login"
+    end
   end
 
   patch '/teachers/:id/edit' do
-
-    @teacher = Teacher.find(session[:teacher_id])
-    @teacher.students = []
-    if params[:students]
-      params[:students].each do |t|
-        @teacher.students << Student.find_by(name: t)
+    if  is_teacher_logged_in?
+      @teacher = current_teacher
+      @teacher.students = []
+      if params[:students]
+        params[:students].each do |t|
+          @teacher.students << Student.find_by(name: t)
+        end
       end
-    end
 
-    if params[:students_new]
-      params[:students_new].each do |t|
-        @teacher.students << Student.find_by(name: t)
+      if params[:students_new]
+        params[:students_new].each do |t|
+          @teacher.students << Student.find_by(name: t)
+        end
       end
+      erb :'/teachers/show'
+    else
+      session[:need_to_login] = "You need to log in to view this page"
+      redirect "/teachers/login"
     end
-
-    erb :'/teachers/show'
   end
 
   get '/teachers/:id/show_student' do
-    @student = Student.find(params[:student_id])
-    @teacher = Teacher.find(session[:teacher_id])
-    erb :'/teachers/show_student'
+    if  is_teacher_logged_in?
+      @student = Student.find(params[:student_id])
+      @teacher = current_teacher
+      erb :'/teachers/show_student'
+    else
+      session[:need_to_login] = "You need to log in to view this page"
+      redirect "/teachers/login"
+    end
   end
 
   get '/teachers/:id/delete' do
     if session[:teacher_id] == params[:id].to_i
-    @teacher = Teacher.find(params[:id])
+      @teacher = current_teacher
     end
     erb :'/teachers/delete'
   end
 
   delete '/teachers/:id/delete' do
-    if session[:teacher_id] == params[:id].to_i
-    @teacher = Teacher.find(params[:id])
-    @teacher.destroy
-    session.clear
+    if is_teacher_logged_in
+      if session[:teacher_id] == params[:id].to_i
+        @teacher = current_teacher
+        @teacher.destroy
+        session.clear
+      end
+        redirect '/'
+    else
+      session[:need_to_login] = "You need to log in to view this page"
+      redirect "/teachers/login"
     end
-    redirect '/'
   end
 
   get '/teachers/logout' do
-    session.clear
-    redirect '/'
+    if is_teacher_logged_in
+      session.clear
+      redirect '/'
+    else
+      session[:need_to_login] = "You need to log in to view this page"
+      redirect "/teachers/login"
+    end
   end
 
 end
