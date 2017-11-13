@@ -1,14 +1,15 @@
 class TeachersController <  ApplicationController
+  include Helpers
 
   get '/teachers/new' do
-    if session[:id]
+    if session[:teacher_id]
       session.clear
     end
       erb :'teachers/create_teacher'
   end
 
   get '/teachers/login' do
-    if session[:id]
+    if session[:teacher_id]
       session.clear
     end
       erb :'/teachers/login'
@@ -17,7 +18,7 @@ class TeachersController <  ApplicationController
   post '/teachers/login' do
     @teacher = Teacher.find_by(username: params[:teacher][:username])
     if @teacher && @teacher.authenticate(params[:teacher][:password])
-      session[:id] = @teacher.id
+      session[:teacher_id] = @teacher.id
       redirect '/teachers/show'
     else
       session[:failure_message] = "That log in wasn't quite right. Please try again."
@@ -28,16 +29,16 @@ class TeachersController <  ApplicationController
   post '/teachers/new' do
     @teacher = Teacher.new(params[:teacher])
     if @teacher.save
-      session[:id] = @teacher.id
+      session[:teacher_id] = @teacher.id
       redirect '/teachers/show'
     else
-      @teacher.errors[:username]
+      @teacher.errors.full_messages.to_sentence
       erb :'teachers/create_teacher'
     end
   end
 
   get '/teachers/show' do
-    @teacher = Teacher.find(session[:id])
+    @teacher = current_teacher
     erb :'/teachers/show'
   end
 
@@ -81,13 +82,13 @@ class TeachersController <  ApplicationController
   end
 
   get '/teachers/:id/edit' do
-    @teacher = Teacher.find(session[:id])
+    @teacher = Teacher.find(session[:teacher_id])
     erb :'/teachers/edit_teacher'
   end
 
   patch '/teachers/:id/edit' do
 
-    @teacher = Teacher.find(session[:id])
+    @teacher = Teacher.find(session[:teacher_id])
     @teacher.students = []
     if params[:students]
       params[:students].each do |t|
@@ -105,20 +106,20 @@ class TeachersController <  ApplicationController
   end
 
   get '/teachers/:id/show_student' do
-    @student = Student.find(params[:id])
-    @teacher = Teacher.find(session[:id])
+    @student = Student.find(params[:student_id])
+    @teacher = Teacher.find(session[:teacher_id])
     erb :'/teachers/show_student'
   end
 
   get '/teachers/:id/delete' do
-    if session[:id] == params[:id].to_i
+    if session[:teacher_id] == params[:id].to_i
     @teacher = Teacher.find(params[:id])
     end
     erb :'/teachers/delete'
   end
 
   delete '/teachers/:id/delete' do
-    if session[:id] == params[:id].to_i
+    if session[:teacher_id] == params[:id].to_i
     @teacher = Teacher.find(params[:id])
     @teacher.destroy
     session.clear
