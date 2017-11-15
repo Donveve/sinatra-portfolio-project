@@ -131,7 +131,7 @@ class TeachersController <  ApplicationController
 
   get '/teachers/:id/show_student' do
     if  is_teacher_logged_in?
-      @student = Student.find(params[:student_id])
+      @student = Student.find_by(id: params[:student_id])
       @teacher = current_teacher
       erb :'/teachers/show_student'
     else

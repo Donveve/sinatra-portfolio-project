@@ -1,7 +1,7 @@
 module Helpers
 
     def current_student
-        Student.find_by(id: session[:studet_id])
+        Student.find_by(id: session[:student_id])
     end
 
     def current_teacher #=> Teacher Instance || nil

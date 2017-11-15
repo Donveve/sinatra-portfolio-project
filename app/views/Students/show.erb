@@ -1,4 +1,4 @@
-<% if Helpers.is_logged_in?(session) %>
+
   <H1>Hello <%=@student.name %></H1>
   <h6>  (if not <%=@student.name %> <a href="/" > click here.)</a> </h6>
   <br />
@@ -36,4 +36,3 @@
   <form method="get" action="/students/<%=@student.id%>/delete">
     <input id="delete" type="submit" name="delete" value="Want to delete your account?">
   </form>
-<%end %>

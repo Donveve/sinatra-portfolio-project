@@ -2,7 +2,7 @@
 class StudentsController <  ApplicationController
 
   get '/students/new' do
-    if session[:id]
+    if session[:student_id]
       session.clear
     end
       erb :'students/create_student'
@@ -12,7 +12,6 @@ class StudentsController <  ApplicationController
     @student = Student.new(params[:student])
     if @student.save
       session[:student_id] = @student.id
-  
       redirect '/students/show'
     else
       session[:failure_message] = @student.errors.full_messages.to_sentence
@@ -77,7 +76,7 @@ class StudentsController <  ApplicationController
       erb :'/students/show'
     else
       session[:need_to_login] = "You need to log in to view this page"
-      redirect "/teachers/login"
+      redirect "/students/login"
     end
   end
 
@@ -100,7 +99,7 @@ class StudentsController <  ApplicationController
         redirect '/'
     else
       session[:need_to_login] = "You need to log in to view this page"
-      redirect "/teachers/login"
+      redirect "/students/login"
     end
   end
 
