@@ -3,7 +3,7 @@
     <br />
     <p>
       <%t=Time.now %>
-      Today is <%=t.strftime("%A") %>, <%= t.strftime("%B") %> <%= t.strftime("%w") %>, <%= t.strftime("%Y") %> <br />
+      Today is <%=t.strftime("%A") %>, <%= t.strftime("%B") %> <%= t.strftime("%d") %>, <%= t.strftime("%Y") %> <br />
     </p>
 
     <%if @teacher.students.empty? %>
