@@ -8,9 +8,13 @@
 
     <%if @teacher.students.empty? %>
         <p>
-          You do not have any students. <a href= "/teachers/<%=@teacher.id%>/edit" /> <br /><br />Visit Edit</a> page to add students and/or make changes to subjects and instruments
+          You do not have any students.
         </p>
-
+        <form method=get action="/teachers/<%=@teacher.id%>/edit">
+          <input type="submit" id='add_students' value="Click to add students" name="add_students" />
+        </form>
+        <br />
+        <br /><br />
       <%else %>
         <% @teacher.students.each do |s| %>
           <h2> <a href='../../teachers/<%= s.id %>/show_student'><%= s.name %></a> </h2> <br />
