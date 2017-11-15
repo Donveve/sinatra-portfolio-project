@@ -141,10 +141,14 @@ class TeachersController <  ApplicationController
   end
 
   get '/teachers/:id/delete' do
-    if session[:teacher_id] == params[:id].to_i
-      @teacher = current_teacher
+    if  is_teacher_logged_in?
+      if session[:teacher_id] == params[:id].to_i
+        @teacher = current_teacher
+      end
+      erb :'/teachers/delete'
+    else
+      erb :index
     end
-    erb :'/teachers/delete'
   end
 
   delete '/teachers/:id/delete' do
