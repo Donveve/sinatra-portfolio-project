@@ -30,9 +30,10 @@ class TeachersController <  ApplicationController
     @teacher = Teacher.new(params[:teacher])
     if @teacher.save
       session[:teacher_id] = @teacher.id
+      flash[:notice] = "Successfully signed up!!!"
       redirect '/teachers/show'
     else
-      @teacher.errors.full_messages.to_sentence
+      flash[:warning] = @teacher.errors.full_messages.to_sentence
       erb :'teachers/create_teacher'
     end
   end

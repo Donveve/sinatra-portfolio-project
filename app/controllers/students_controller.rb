@@ -14,7 +14,7 @@ class StudentsController <  ApplicationController
       session[:student_id] = @student.id
       redirect '/students/show'
     else
-      session[:failure_message] = @student.errors.full_messages.to_sentence
+      flash[:notice] = @student.errors.full_messages.to_sentence
       erb :'students/create_student'
     end
   end

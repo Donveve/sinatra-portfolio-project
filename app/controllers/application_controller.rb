@@ -9,7 +9,7 @@ class ApplicationController < Sinatra::Base
     require 'sinatra/flash'
     enable :sessions
     set :session_secret, "secret"
-
+    use Rack::Flash, :sweep => true
   end
 
   get "/" do

@@ -5,7 +5,7 @@ module Helpers
     end
 
     def current_teacher #=> Teacher Instance || nil
-        Teacher.find_by(id: session[:teacher_id])
+        Teacher.(id: session[:teacher_id])
     end
 
     def is_teacher_logged_in?

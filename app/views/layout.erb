@@ -15,9 +15,9 @@
 </head>
 <body>
   <div class="wrapper">
-    <% if session[:failure_message] %>
+    <% if flash.has?(:warning) %>
         <p style="color:red;">
-          <%= session[:failure_message] %>
+          <%= flash[:warning] %>
         </p>
       <% end %>
       <br />
