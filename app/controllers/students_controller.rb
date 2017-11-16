@@ -12,7 +12,7 @@ class StudentsController <  ApplicationController
     @student = Student.new(params[:student])
     if @student.save
       session[:student_id] = @student.id
-      flash[:notice] = "Successfully signed up."
+      flash[:success] = "Successfully signed up."
       redirect '/students/show'
     else
       flash[:warning] = @student.errors.full_messages.to_sentence
