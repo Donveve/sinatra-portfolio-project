@@ -21,8 +21,8 @@ class TeachersController <  ApplicationController
       session[:teacher_id] = @teacher.id
       redirect '/teachers/show'
     else
-      session[:failure_message] = "That log in wasn't quite right. Please try again."
-      redirect '/teachers/login'
+      flash[:warning] = "That log in wasn't quite right. Please try again."
+      erb :'/teachers/login'
     end
   end
 
@@ -30,7 +30,7 @@ class TeachersController <  ApplicationController
     @teacher = Teacher.new(params[:teacher])
     if @teacher.save
       session[:teacher_id] = @teacher.id
-      flash[:notice] = "Successfully signed up!!!"
+      flash[:success] = "Successfully signed up!"
       redirect '/teachers/show'
     else
       flash[:warning] = @teacher.errors.full_messages.to_sentence
@@ -43,7 +43,7 @@ class TeachersController <  ApplicationController
     if @teacher != nil
         erb :'/teachers/show'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       erb :index
     end
   end
@@ -52,7 +52,7 @@ class TeachersController <  ApplicationController
     if is_teacher_logged_in?
       erb:'/teachers/edit_assignments'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/teachers/login"
     end
   end
@@ -84,7 +84,7 @@ class TeachersController <  ApplicationController
       end
       redirect '/teachers/display_assignments'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/teachers/login"
     end
   end
@@ -93,7 +93,7 @@ class TeachersController <  ApplicationController
     if  is_teacher_logged_in?
       erb :'/teachers/display_assignments'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/teachers/login"
     end
   end
@@ -103,7 +103,7 @@ class TeachersController <  ApplicationController
       @teacher = current_teacher
       erb :'/teachers/edit_teacher'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/teachers/login"
     end
   end
@@ -125,7 +125,7 @@ class TeachersController <  ApplicationController
       end
       erb :'/teachers/show'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/teachers/login"
     end
   end
@@ -136,7 +136,7 @@ class TeachersController <  ApplicationController
       @teacher = current_teacher
       erb :'/teachers/show_student'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/teachers/login"
     end
   end
@@ -161,7 +161,7 @@ class TeachersController <  ApplicationController
       end
         redirect '/'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/teachers/login"
     end
   end
@@ -171,7 +171,7 @@ class TeachersController <  ApplicationController
       session.clear
       redirect '/'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/teachers/login"
     end
   end

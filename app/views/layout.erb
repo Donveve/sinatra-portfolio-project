@@ -16,9 +16,13 @@
 <body>
   <div class="wrapper">
     <% if flash.has?(:warning) %>
-        <p style="color:red;">
-          <%= flash[:warning] %>
-        </p>
+          <p style="color:red;">
+            <%= flash[:warning] %>
+          </p>
+      <%elsif flash.has?(:success) %>
+          <p style="color:green;">
+            <%= flash[:success] %>
+          </p>
       <% end %>
       <br />
       <%= yield %>

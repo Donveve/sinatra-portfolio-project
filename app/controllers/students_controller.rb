@@ -12,9 +12,10 @@ class StudentsController <  ApplicationController
     @student = Student.new(params[:student])
     if @student.save
       session[:student_id] = @student.id
+      flash[:notice] = "Successfully signed up."
       redirect '/students/show'
     else
-      flash[:notice] = @student.errors.full_messages.to_sentence
+      flash[:warning] = @student.errors.full_messages.to_sentence
       erb :'students/create_student'
     end
   end
@@ -24,7 +25,7 @@ class StudentsController <  ApplicationController
     if @student !=nil
       erb :'/students/show'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       erb :index
     end
   end
@@ -40,10 +41,11 @@ class StudentsController <  ApplicationController
     @student = Student.find_by(username: params[:student][:username])
     if @student && @student.authenticate(params[:student][:password])
       session[:student_id] = @student.id
+      flash[:success] = "You have successfully logged in"
       redirect '/students/show'
     else
-      session[:failure_message] = "That log in wasn't quite right. Please try again."
-      redirect '/students/login'
+      flash[:warning] = "That log in wasn't quite right. Please try again."
+      erb :'/students/login'
     end
   end
 
@@ -52,7 +54,7 @@ class StudentsController <  ApplicationController
       @student = current_student
       erb :'/students/edit_student'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/students/login"
     end
   end
@@ -75,7 +77,7 @@ class StudentsController <  ApplicationController
       end
       erb :'/students/show'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/students/login"
     end
   end
@@ -98,7 +100,7 @@ class StudentsController <  ApplicationController
         session.clear
         redirect '/'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/students/login"
     end
   end
@@ -108,7 +110,7 @@ class StudentsController <  ApplicationController
       session.clear
       redirect '/'
     else
-      session[:need_to_login] = "You need to log in to view this page"
+      flash[:warning] = "You need to log in to view this page"
       redirect "/students/login"
     end
   end
