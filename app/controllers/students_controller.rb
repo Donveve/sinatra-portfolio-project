@@ -2,7 +2,7 @@
 class StudentsController <  ApplicationController
 
   get '/students/new' do
-    if session[:id]
+    if session[:student_id]
       session.clear
     end
       erb :'students/create_student'
@@ -11,83 +11,107 @@ class StudentsController <  ApplicationController
   post '/students/new' do
     @student = Student.new(params[:student])
     if @student.save
-      session[:id] = @student.id
+      session[:student_id] = @student.id
+      flash[:notice] = "Successfully signed up."
       redirect '/students/show'
     else
-
+      flash[:warning] = @student.errors.full_messages.to_sentence
       erb :'students/create_student'
     end
   end
 
   get '/students/show' do
-    @student = Student.find(session[:id])
-    erb :'/students/show'
+    @student = current_student
+    if @student !=nil
+      erb :'/students/show'
+    else
+      flash[:warning] = "You need to log in to view this page"
+      erb :index
+    end
   end
 
   get '/students/login' do
-    if session[:id]
+    if session
       session.clear
     end
-      session[:failure_message] = "That log in wasn't quite right. Please try again."
       erb :'/students/login'
   end
 
   post '/students/login' do
     @student = Student.find_by(username: params[:student][:username])
     if @student && @student.authenticate(params[:student][:password])
-      session[:id] = @student.id
+      session[:student_id] = @student.id
+      flash[:success] = "You have successfully logged in"
       redirect '/students/show'
     else
-      redirect '/students/login'
+      flash[:warning] = "That log in wasn't quite right. Please try again."
+      erb :'/students/login'
     end
   end
 
   get '/students/:id/edit' do
-    @student = Student.find(session[:id])
-
-    erb :'/students/edit_student'
+    if is_student_logged_in?
+      @student = current_student
+      erb :'/students/edit_student'
+    else
+      flash[:warning] = "You need to log in to view this page"
+      redirect "/students/login"
+    end
   end
 
   patch '/students/:id/edit' do
+    if is_student_logged_in?
+      @student = current_student
+      @student.instruments = []
+      @student.subjects = []
 
-    @student = Student.find(session[:id])
-    @student.instruments = []
-    @student.subjects = []
-
-    if params[:instruments]
-      params[:instruments].each do |t|
-        @student.instruments << Instrument.find_by(name: t)
+      if params[:instruments]
+        params[:instruments].each do |t|
+          @student.instruments << Instrument.find_by(name: t)
+        end
       end
-    end
-
-    if params[:subjects]
-      params[:subjects].each do |t|
-        @student.subjects << Subject.find_by(name: t)
+      if params[:subjects]
+        params[:subjects].each do |t|
+          @student.subjects << Subject.find_by(name: t)
+        end
       end
+      erb :'/students/show'
+    else
+      flash[:warning] = "You need to log in to view this page"
+      redirect "/students/login"
     end
-
-    redirect '/students/show'
   end
 
   get '/students/:id/delete' do
-    if session[:id] == params[:id].to_i
-    @student = Student.find(params[:id])
-  end
-    erb :'/students/delete'
+    if is_student_logged_in?
+      if session[:student_id] == params[:id].to_i
+        @student = current_student
+      end
+      erb :'/students/delete'
+    else
+      erb :index
+    end
   end
 
   delete '/students/:id/delete' do
-    if session[:id] == params[:id].to_i
-    @student = Student.find(params[:id])
-    @student.destroy
-    session.clear
-  end
-    redirect '/'
+    if is_student_logged_in? && session[:student_id] == params[:id].to_i
+        @student = current_student
+        @student.destroy
+        session.clear
+        redirect '/'
+    else
+      flash[:warning] = "You need to log in to view this page"
+      redirect "/students/login"
+    end
   end
 
   get '/students/logout' do
-    session.clear
-    redirect '/'
+    if is_student_logged_in?
+      session.clear
+      redirect '/'
+    else
+      flash[:warning] = "You need to log in to view this page"
+      redirect "/students/login"
+    end
   end
-
 end

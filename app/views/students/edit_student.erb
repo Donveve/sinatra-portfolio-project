@@ -3,7 +3,7 @@
   <H1>Hello <%= @student.name %></H1>
   <br />
   <p>
-    Today is <%=t.strftime("%A") %>, <%= t.strftime("%B") %> <%= t.strftime("%w") %>, <%= t.strftime("%Y") %> <br />
+    Today is <%=t.strftime("%A") %>, <%= t.strftime("%B") %> <%= t.strftime("%d") %>, <%= t.strftime("%Y") %> <br />
   </p>
 
 <form method="post" action="/students/<%= @student.id%>/edit">

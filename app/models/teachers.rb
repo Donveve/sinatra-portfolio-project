@@ -1,6 +1,6 @@
 class Teacher < ActiveRecord::Base
-  validates :username, uniqueness:
-    { message: "username already taken"}
+  validates :username, uniqueness: true
+
 
   has_secure_password
 

@@ -2,12 +2,6 @@
 <h3>Register below:</h3>
 <br />
 
-<% if @student && @student.errors.any? %>
-<% binding.pry %>
-<%=  @student.errors.full_messages %>
-<br /><br />
-<%end%>
-
 <form method=POST action='/students/new'>
   Name: <input type='text' id='student[name]' name='student[name]' required/><br /><br />
   Username: <input type='text' id='student[username]' name='student[username]' required/><br /><br />

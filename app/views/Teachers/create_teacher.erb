@@ -1,11 +1,6 @@
 <h1>Welcome</h1>
 <h3>Register below:</h3>
 
-<% if @teacher && @teacher.errors.any? %>
-<%=  @teacher.errors.full_messages %>
-<br />
-<%end%>
-
 <br />
 <form method=POST action='/teachers/new'>
   Name: <input type='text' id='teacher[name]' name='teacher[name]' required/><br /><br />

@@ -15,10 +15,14 @@
 </head>
 <body>
   <div class="wrapper">
-    <% if session[:failure_message] %>
-        <p style="color:red;">
-          <%= session[:failure_message] %>
-        </p>
+    <% if flash.has?(:warning) %>
+          <p style="color:red;">
+            <%= flash[:warning] %>
+          </p>
+      <%elsif flash.has?(:success) %>
+          <p style="color:green;">
+            <%= flash[:success] %>
+          </p>
       <% end %>
       <br />
       <%= yield %>
