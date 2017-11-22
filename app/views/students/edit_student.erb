@@ -1,30 +1,28 @@
-<% if Helpers.is_logged_in?(session) %>
+
 <%t=Time.now %>
-  <H1>Hello <%= @student.name %></H1>
+  <H1>Hello <%= current_student.name %></H1>
   <br />
   <p>
-    Today is <%=t.strftime("%A") %>, <%= t.strftime("%B") %> <%= t.strftime("%d") %>, <%= t.strftime("%Y") %> <br />
+    Today is <%=@current_time.strftime("%A") %>, <%= @current_time.strftime("%B") %> <%= @current_time.strftime("%d") %>, <%= @current_time.strftime("%Y") %> <br />
   </p>
 
-<form method="post" action="/students/<%= @student.id%>/edit">
+<form method="post" action="/students/<%= current_student.id%>/edit">
   <input id="hidden" type="hidden" name="_method" value="patch">
 
   <h2>Check off the subjects you completed today:</h2>
       <br />
-
-      <%Subject.all.each do |subject| %>
-
-        <input id="<%= subject.name %>" type="checkbox" name="subjects[]" value='<%= subject.name %>' <%='checked' if @student.subjects.include?(subject) %>><%=subject.name%> </input>
+      <% @subjects.all.each do |subject| %>
+        <input id="<%= subject.id %>" type="checkbox" name="subject_ids[]" value='<%= subject.id %>' <%='checked' if current_student.subjects.include?(subject) %>><%=subject.name%> </input>
           <br />
-      <%end %>
+      <% end %>
               <br /><br />
 
   <h2>Check off the instruments you practiced today:</h2>
       <br />
-      <%Instrument.all.each do |instrument| %>
-        <input id="<%= instrument.name %>" type="checkbox" name="instruments[]" value="<%= instrument.name %>" <%='checked' if @student.instruments.include?(instrument) %>><%=instrument.name%> </input>
+      <% @instruments.all.each do |instrument| %>
+        <input id="<%= instrument.id %>" type="checkbox" name="instrument_ids[]" value="<%= instrument.id %>" <%='checked' if current_student.instruments.include?(instrument) %>><%=instrument.name%> </input>
         <br />
-      <%end %>
+      <% end %>
     <br /><br />
     <input type="submit" name="Submit Coursework" value="Submit Coursework" />
 </form>
@@ -33,4 +31,3 @@
     <input type='submit' id='signout' value='Sign Out' name='signout' />
   </form>
   <a href='/students/show'>Head to display page without making changes.</a>
-<%end %>

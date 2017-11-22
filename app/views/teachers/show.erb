@@ -1,34 +1,33 @@
-    <h1>Hello <%=@teacher.name %></h1>
-    <h6>  (if not <%=@teacher.name %> <a href="/" > click here.)</a> </h6>
+    <h1>Hello <%=current_teacher.name %></h1>
+    <h6>  (if not <%=current_teacher.name %> <a href="/" > click here.)</a> </h6>
     <br />
     <p>
-      <%t=Time.now %>
-      Today is <%=t.strftime("%A") %>, <%= t.strftime("%B") %> <%= t.strftime("%d") %>, <%= t.strftime("%Y") %> <br />
+      Today is <%=@time.strftime("%A") %>, <%= @time.strftime("%B") %> <%= @time.strftime("%d") %>, <%= @time.strftime("%Y") %> <br />
     </p>
 
-    <%if @teacher.students.empty? %>
+    <%if current_teacher.students.empty? %>
         <p>
           You do not have any students.
         </p>
-        <form method=get action="/teachers/<%=@teacher.id%>/edit">
+        <form method=get action="/teachers/<%=current_teacher.id%>/edit">
           <input type="submit" id='add_students' value="Click to add students" name="add_students" />
         </form>
         <br />
         <br /><br />
       <%else %>
-        <% @teacher.students.each do |s| %>
-          <h2> <a href='../../teachers/<%= s.id %>/show_student'><%= s.name %></a> </h2> <br />
+        <% current_teacher.students.each do |student| %>
+          <h2> <a href='../../teachers/<%= student.id %>/show_student'><%= student.name %></a> </h2> <br />
             <h4>Subjects Completed</h4> <br />
-                <%s.subjects.each do |t| %>
+                <%student.subjects.each do |subject| %>
                   <p>
-                    <%= t.name %>   <br
+                    <%= subject.name %>   <br
                   </p>
                 <%end %> <br />
 
             <h4>Instruments Practiced</h4> <br />
-                <%s.instruments.each do |t| %>
+                <%student.instruments.each do |instrument| %>
                   <p>
-                    <%= t.name %>   <br
+                    <%= instrument.name %>   <br
                   </p>
                 <%end %> <br /><br />
         <%end %>
@@ -44,7 +43,7 @@
 </form>
 <br />
 
-<form method="get" action="/teachers/<%=@teacher.id%>/delete">
+<form method="get" action="/teachers/<%=current_teacher.id%>/delete">
   <input id="hidden" type="hidden" name="_method" value="delete">
   <input id="delete" type="submit" name="delete" value="Want to delete your account?">
 </form>

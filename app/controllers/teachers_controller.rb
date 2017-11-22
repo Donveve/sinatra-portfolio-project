@@ -16,10 +16,11 @@ class TeachersController <  ApplicationController
   end
 
   post '/teachers/login' do
-    @teacher = Teacher.find_by(username: params[:teacher][:username])
-    if @teacher && @teacher.authenticate(params[:teacher][:password])
-      session[:teacher_id] = @teacher.id
-      redirect '/teachers/show'
+    teacher = Teacher.find_by(username: params[:teacher][:username])
+    if teacher && teacher.authenticate(params[:teacher][:password])
+      session[:teacher_id] = teacher.id
+      @time = Time.now
+      erb :'/teachers/show'
     else
       flash[:warning] = "That log in wasn't quite right. Please try again."
       erb :'/teachers/login'
@@ -27,20 +28,21 @@ class TeachersController <  ApplicationController
   end
 
   post '/teachers/new' do
-    @teacher = Teacher.new(params[:teacher])
-    if @teacher.save
-      session[:teacher_id] = @teacher.id
+    teacher = Teacher.new(params[:teacher])
+    if teacher.save
+      session[:teacher_id] = teacher.id
       flash[:success] = "Successfully signed up!"
       redirect '/teachers/show'
     else
-      flash[:warning] = @teacher.errors.full_messages.to_sentence
+      flash[:warning] = teacher.errors.full_messages.to_sentence
       erb :'teachers/create_teacher'
     end
   end
 
   get '/teachers/show' do
-    @teacher = current_teacher
-    if @teacher != nil
+    teacher = current_teacher
+    if teacher != nil
+        @time = Time.now
         erb :'/teachers/show'
     else
       flash[:warning] = "You need to log in to view this page"
@@ -59,27 +61,27 @@ class TeachersController <  ApplicationController
 
   patch '/teachers/edit_assignments' do
     if  is_teacher_logged_in?
-      params[:new_subject].each do |s|
-        if !s.empty?
-            Subject.create(name: s )
+      params[:new_subject].each do |subject|
+        if !subject.empty?
+            Subject.create(name: subject )
         end
       end
 
-      params[:new_instrument].each do |i|
-        if !i.empty?
-            Instrument.create(name: i)
+      params[:new_instrument].each do |instrument|
+        if !instrument.empty?
+            Instrument.create(name: instrument)
         end
       end
 
       if params[:subjects]
-        params[:subjects].each do |t|
-          Subject.find_by(name: t).destroy
+        params[:subjects].each do |subject|
+          Subject.find_by(name: subject).destroy
         end
       end
 
       if params[:instruments]
-        params[:instruments].each do |t|
-          Instrument.find_by(name: t).destroy
+        params[:instruments].each do |instrument|
+          Instrument.find_by(name: instrument).destroy
         end
       end
       redirect '/teachers/display_assignments'
@@ -100,7 +102,7 @@ class TeachersController <  ApplicationController
 
   get '/teachers/:id/edit' do
     if  is_teacher_logged_in?
-      @teacher = current_teacher
+      teacher = current_teacher
       erb :'/teachers/edit_teacher'
     else
       flash[:warning] = "You need to log in to view this page"
@@ -110,19 +112,20 @@ class TeachersController <  ApplicationController
 
   patch '/teachers/:id/edit' do
     if  is_teacher_logged_in?
-      @teacher = current_teacher
-      @teacher.students = []
+      teacher = current_teacher
+      teacher.students = []
       if params[:students]
-        params[:students].each do |t|
-          @teacher.students << Student.find_by(name: t)
+        params[:students].each do |student_name|
+          teacher.students << Student.find_by(name: student_name)
         end
       end
 
       if params[:students_new]
-        params[:students_new].each do |t|
-          @teacher.students << Student.find_by(name: t)
+        params[:students_new].each do |student_name|
+          teacher.students << Student.find_by(name: student_name)
         end
       end
+      @time = Time.now
       erb :'/teachers/show'
     else
       flash[:warning] = "You need to log in to view this page"
@@ -132,8 +135,8 @@ class TeachersController <  ApplicationController
 
   get '/teachers/:id/show_student' do
     if  is_teacher_logged_in?
-      @student = Student.find_by(id: params[:student_id])
-      @teacher = current_teacher
+      @student = Student.find_by(id: params[:id])
+      @time = Time.now
       erb :'/teachers/show_student'
     else
       flash[:warning] = "You need to log in to view this page"
@@ -144,9 +147,8 @@ class TeachersController <  ApplicationController
   get '/teachers/:id/delete' do
     if  is_teacher_logged_in?
       if session[:teacher_id] == params[:id].to_i
-        @teacher = current_teacher
-      end
       erb :'/teachers/delete'
+      end
     else
       erb :index
     end
@@ -155,8 +157,8 @@ class TeachersController <  ApplicationController
   delete '/teachers/:id/delete' do
     if is_teacher_logged_in?
       if session[:teacher_id] == params[:id].to_i
-        @teacher = current_teacher
-        @teacher.destroy
+        teacher = current_teacher
+        teacher.destroy
         session.clear
       end
         redirect '/'

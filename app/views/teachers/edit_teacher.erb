@@ -1,23 +1,23 @@
-<h1>Hello <%= @teacher.name %></h1>
+<h1>Hello <%= current_teacher.name %></h1>
 
-<form method="post" action="/teachers/<%= @teacher.id%>/edit">
+<form method="post" action="/teachers/<%= current_teacher.id%>/edit">
   <input id="hidden" type="hidden" name="_method" value="patch">
 <h3>Your student list:</h3>
- <%if @teacher.students.empty? %>
+ <%if current_teacher.students.empty? %>
     <p>  No current students</p>
   <%end %>
-  <%@teacher.students.each do |s| %>
-    <input id="<%= s.name %>" type="checkbox" name="students[]"
+  <%current_teacher.students.each do |student| %>
+    <input id="<%= student.name %>" type="checkbox" name="students[]"
      value='<%= student.name %>' <%='checked' %>><%=student.name%>
    </input>
    <br />
 <%end %>
 
 <h3>Add students:</h3>
-  <%Student.all.each do |s| %>
-    <%if !@teacher.students.include?(s) %>
-      <input id="<%= s.name %>" type="checkbox" name="students_new[]"
-       value='<%= s.name %>' ><%=s.name%>
+  <%Student.all.each do |student| %>
+    <%if !current_teacher.students.include?(student) %>
+      <input id="<%= student.name %>" type="checkbox" name="students_new[]"
+       value='<%= student.name %>' ><%=student.name%>
         <br />
     <%end %>
   <%end %>
@@ -31,7 +31,7 @@
 </form>
 
 <br />
-<form method="get" action="/teachers/<%=@teacher.id%>/delete">
+<form method="get" action="/teachers/<%=current_teacher.id%>/delete">
   <input id="hidden" type="hidden" name="_method" value="delete">
   <input id="delete" type="submit" name="delete" value="Want to delete your account?">
 </form>

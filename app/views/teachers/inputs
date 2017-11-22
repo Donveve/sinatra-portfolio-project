@@ -1,5 +1,5 @@
 <td>
-  <%@teacher.students.each do |s| %>
+  <%current_teacher.students.each do |s| %>
     <input id="<%= s.name %>" type="checkbox" name="students[]"
      value='<%= student.name %>' <%='checked' %>><%=student.name%>
     </input>
@@ -7,7 +7,7 @@
 </td>
 <td>
   <%Student.all.each do |s| %>
-    <%if !@teacher.students.include?(s) %>
+    <%if !current_teacher.students.include?(s) %>
     <%= s.name %>
   <%end %>
 </td>
@@ -16,7 +16,7 @@
 
 
 <h3>Your student list:</h3>
-<%@teacher.students.each do |s| %>
+<%current_teacher.students.each do |s| %>
   <input id="<%= s.name %>" type="checkbox" name="students[]"
    value='<%= student.name %>' <%='checked' %>><%=student.name%>
   </input>
@@ -26,7 +26,7 @@
 <%Student.all.each do |s| %>
   <ul>
     <li>
-      <%if !@teacher.students.include?(s) %>
+      <%if !current_teacher.students.include?(s) %>
       <%= s.name %>
       <%end %>
     </li>

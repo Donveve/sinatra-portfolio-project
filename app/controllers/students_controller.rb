@@ -9,20 +9,20 @@ class StudentsController <  ApplicationController
   end
 
   post '/students/new' do
-    @student = Student.new(params[:student])
-    if @student.save
-      session[:student_id] = @student.id
+    student = Student.new(params[:student])
+    if student.save
+      session[:student_id] = student.id
       flash[:notice] = "Successfully signed up."
       redirect '/students/show'
     else
-      flash[:warning] = @student.errors.full_messages.to_sentence
+      flash[:warning] = student.errors.full_messages.to_sentence
       erb :'students/create_student'
     end
   end
 
   get '/students/show' do
-    @student = current_student
-    if @student !=nil
+    if is_student_logged_in?
+      @current_time = Time.now
       erb :'/students/show'
     else
       flash[:warning] = "You need to log in to view this page"
@@ -38,9 +38,9 @@ class StudentsController <  ApplicationController
   end
 
   post '/students/login' do
-    @student = Student.find_by(username: params[:student][:username])
-    if @student && @student.authenticate(params[:student][:password])
-      session[:student_id] = @student.id
+    student = Student.find_by(username: params[:student][:username])
+    if student && student.authenticate(params[:student][:password])
+      session[:student_id] = student.id
       flash[:success] = "You have successfully logged in"
       redirect '/students/show'
     else
@@ -51,7 +51,9 @@ class StudentsController <  ApplicationController
 
   get '/students/:id/edit' do
     if is_student_logged_in?
-      @student = current_student
+      @instruments = Instrument.all
+      @subjects = Subject.all
+      @current_time = Time.now
       erb :'/students/edit_student'
     else
       flash[:warning] = "You need to log in to view this page"
@@ -61,21 +63,17 @@ class StudentsController <  ApplicationController
 
   patch '/students/:id/edit' do
     if is_student_logged_in?
-      @student = current_student
-      @student.instruments = []
-      @student.subjects = []
-
-      if params[:instruments]
-        params[:instruments].each do |t|
-          @student.instruments << Instrument.find_by(name: t)
-        end
+      current_student.instrument_ids = params[:instrument_ids]
+      current_student.subject_ids = params[:subject_ids]
+      if current_student.save
+        redirect to "/students/show"
+      else
+        flash[:warning] = current_student.errors.full_messages.to_sentence
+        @instruments = Instrument.all
+        @subjects = Subject.all
+        @current_time = Time.now
+        erb :'students/edit_student'
       end
-      if params[:subjects]
-        params[:subjects].each do |t|
-          @student.subjects << Subject.find_by(name: t)
-        end
-      end
-      erb :'/students/show'
     else
       flash[:warning] = "You need to log in to view this page"
       redirect "/students/login"
@@ -85,9 +83,8 @@ class StudentsController <  ApplicationController
   get '/students/:id/delete' do
     if is_student_logged_in?
       if session[:student_id] == params[:id].to_i
-        @student = current_student
+        erb :'/students/delete'
       end
-      erb :'/students/delete'
     else
       erb :index
     end
@@ -95,8 +92,8 @@ class StudentsController <  ApplicationController
 
   delete '/students/:id/delete' do
     if is_student_logged_in? && session[:student_id] == params[:id].to_i
-        @student = current_student
-        @student.destroy
+        student = current_student
+        student.destroy
         session.clear
         redirect '/'
     else

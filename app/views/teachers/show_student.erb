@@ -1,9 +1,8 @@
-<% if Helpers.is_logged_in?(session) %>
-  <H1>Hello <%=@teacher.name %></H1>
+  <H1>Hello <%=current_teacher.name %></H1>
   <br />
   <p>
     <%t=Time.now %>
-    Today is <%=t.strftime("%A") %>, <%= t.strftime("%B") %> <%= t.strftime("%d") %>, <%= t.strftime("%Y") %> <br />
+    Today is <%=@time.strftime("%A") %>, <%= @time.strftime("%B") %> <%= @time.strftime("%d") %>, <%= @time.strftime("%Y") %> <br />
   </p>
 
   <%if !@student.subjects.empty? %>
@@ -29,5 +28,3 @@
 
   <a href="/teachers/show">Return to student view</a>
   <br /><br />
-
-<%end %>
