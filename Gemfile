@@ -19,14 +19,13 @@ group :test do
   gem 'capybara'
   gem 'rack-test'
   gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner.git'
+end
 
-  group :development do
+group :development do
    gem 'sqlite3', '1.3.13'
-  end
+end
 
-  group :production do
+group :production do
      gem 'pg'
      gem 'activerecord-postgresql-adapter'
-  end
-
 end
